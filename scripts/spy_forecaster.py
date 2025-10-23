@@ -30,6 +30,10 @@ class SPYForecaster:
         if df.empty:
             raise ValueError("No data fetched from yfinance")
         
+        # Flatten multi-level columns if present
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+        
         return df
     
     def calculate_indicators(self, df):
